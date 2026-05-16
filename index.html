@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Creator Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+        }
+
+        /* Main Grid */
+        .paths-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Path Buttons */
+        .path-btn {
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .path-btn:hover {
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .path-btn.media {
+            background: linear-gradient(to right, #9333ea, #a855f7);
+        }
+
+        .path-btn.media:hover {
+            box-shadow: 0 15px 35px rgba(147, 51, 234, 0.4);
+        }
+
+        .path-btn span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+        }
+
+        .chevron {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .path-btn.active .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Path Content */
+        .path-content {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .path-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Level Cards */
+        .level {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border-left: 4px solid #60a5fa;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .path-content.media .level {
+            background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%);
+            border-left-color: #d946ef;
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .level-number {
+            background: #60a5fa;
+            color: #1e3a8a;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .path-content.media .level-number {
+            background: #d946ef;
+            color: #6b21a8;
+        }
+
+        .level-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+        }
+
+        .path-content.media .level-title {
+            color: #f0abfc;
+        }
+
+        .level-subtitle {
+            font-size: 0.875rem;
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        .duration {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: #bfdbfe;
+        }
+
+        .path-content.media .duration {
+            color: #f0abfc;
+        }
+
+        /* Skills List */
+        .skills-list {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            list-style: none;
+        }
+
+        .skills-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .skills-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .skills-list li:before {
+            content: "✓";
+            color: #60a5fa;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .path-content.media .skills-list li:before {
+            color: #d946ef;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            background: #1e3a8a;
+            border: 1px solid #3b82f6;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .path-content.media .tools-section {
+            background: #6b21a8;
+            border-color: #d946ef;
+        }
+
+        .tools-title {
+            color: #93c5fd;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .path-content.media .tools-title {
+            color: #f0abfc;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .comparison-section h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: rgba(30, 41, 59, 0.8);
+            border-bottom: 2px solid #334155;
+        }
+
+        table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        table tr:hover {
+            background: rgba(51, 65, 85, 0.3);
+        }
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid #334155;
+            color: #cbd5e1;
+        }
+
+        /* Daily Tasks Section */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tasks-box {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border: 1px solid #3b82f6;
+            border-radius: 0.75rem;
+            padding: 2rem;
+        }
+
+        .tasks-box.media {
+            background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%);
+            border-color: #d946ef;
+        }
+
+        .tasks-box h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #93c5fd;
+            margin-bottom: 1.5rem;
+        }
+
+        .tasks-box.media h3 {
+            color: #f0abfc;
+        }
+
+        .tasks-box ul {
+            list-style: none;
+        }
+
+        .tasks-box li {
+            display: flex;
+            align-items: flex-start;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tasks-box li:before {
+            content: "→";
+            color: #60a5fa;
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .tasks-box.media li:before {
+            color: #d946ef;
+        }
+
+        /* Progression Timeline */
+        .progression-section {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .progression-section h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .timeline-column h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-column.media h3 {
+            color: #d946ef;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-dot {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: #3b82f6;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .timeline-item:nth-child(2) .timeline-dot {
+            background: #60a5fa;
+        }
+
+        .timeline-item:nth-child(3) .timeline-dot {
+            background: #93c5fd;
+        }
+
+        .timeline-column.media .timeline-item:nth-child(1) .timeline-dot {
+            background: #9333ea;
+        }
+
+        .timeline-column.media .timeline-item:nth-child(2) .timeline-dot {
+            background: #a855f7;
+        }
+
+        .timeline-column.media .timeline-item:nth-child(3) .timeline-dot {
+            background: #c084fc;
+        }
+
+        .timeline-content p:first-child {
+            font-weight: bold;
+            color: #e2e8f0;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content p:last-child {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .paths-grid,
+            .tasks-grid,
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            table {
+                font-size: 0.875rem;
+            }
+
+            table th,
+            table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: #3b82f6;
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📚 Content Creator Roadmap</h1>
+            <p>Two Specialized Career Paths</p>
+        </div>
+
+        <!-- Main Paths -->
+        <div class="paths-grid">
+            <!-- Path 1: Web Content Creator -->
+            <div>
+                <button class="path-btn" onclick="togglePath(this, 'web')">
+                    <span>📝 Web Content Creator</span>
+                    <span class="chevron">▼</span>
+                </button>
+
+                <div class="path-content" id="web">
+                    <!-- Level 1 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">1</div>
+                                    <div class="level-title">Junior Content Writer</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 3-6 months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Write website copy & product descriptions</li>
+                            <li>Blog posts & articles</li>
+                            <li>Basic SEO knowledge</li>
+                            <li>WordPress basics</li>
+                            <li>Meta descriptions & headlines</li>
+                        </ul>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">2</div>
+                                    <div class="level-title">Content Strategist</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 6-12 months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Content planning & calendars</li>
+                            <li>Advanced SEO optimization</li>
+                            <li>UX writing (buttons, notifications)</li>
+                            <li>Technical documentation</li>
+                            <li>Content analytics & performance</li>
+                        </ul>
+                    </div>
+
+                    <!-- Level 3 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">3</div>
+                                    <div class="level-title">Senior Content Manager</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 12+ months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Full content strategy & leadership</li>
+                            <li>Team management & mentoring</li>
+                            <li>Web app content design</li>
+                            <li>Brand voice development</li>
+                            <li>Marketing & growth strategy</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="tools-section">
+                        <div class="tools-title">🛠️ Essential Tools</div>
+                        <div class="tools-grid">
+                            <div>WordPress</div>
+                            <div>Grammarly</div>
+                            <div>SEO Tools (Yoast)</div>
+                            <div>Google Analytics</div>
+                            <div>Figma</div>
+                            <div>Jira/Asana</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path 2: Digital Media Creator -->
+            <div>
+                <button class="path-btn media" onclick="togglePath(this, 'media')">
+                    <span>🎨 Digital Media Creator</span>
+                    <span class="chevron">▼</span>
+                </button>
+
+                <div class="path-content media" id="media">
+                    <!-- Level 1 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">1</div>
+                                    <div class="level-title">Graphic & Visual Designer</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 3-6 months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Poster design</li>
+                            <li>Invitation design</li>
+                            <li>Basic image editing</li>
+                            <li>Design principles & color theory</li>
+                            <li>Canva & Adobe Express</li>
+                        </ul>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">2</div>
+                                    <div class="level-title">Image & Video Editor</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 6-12 months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Professional image editing (Photoshop)</li>
+                            <li>Photo retouching & color grading</li>
+                            <li>Video editing basics</li>
+                            <li>Transitions & effects</li>
+                            <li>Audio editing & sound design</li>
+                        </ul>
+                    </div>
+
+                    <!-- Level 3 -->
+                    <div class="level">
+                        <div class="level-header">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div class="level-number">3</div>
+                                    <div class="level-title">Multimedia Producer</div>
+                                </div>
+                                <div class="level-subtitle">Duration: 12+ months</div>
+                            </div>
+                        </div>
+                        <ul class="skills-list">
+                            <li>Advanced video production</li>
+                            <li>Motion graphics & animation</li>
+                            <li>VFX & special effects</li>
+                            <li>Content branding & style</li>
+                            <li>Creative direction & client management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="tools-section">
+                        <div class="tools-title">🛠️ Essential Tools</div>
+                        <div class="tools-grid">
+                            <div>Photoshop</div>
+                            <div>DaVinci Resolve</div>
+                            <div>Adobe Premiere</div>
+                            <div>Lightroom</div>
+                            <div>After Effects</div>
+                            <div>Canva Pro</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="comparison-section">
+            <h2>📊 Content Creator Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Web Content Creator</th>
+                        <th>Digital Media Creator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Main Focus</strong></td>
+                        <td>Text, words, messaging</td>
+                        <td>Images, videos, visuals</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Skills</strong></td>
+                        <td>Writing, SEO, strategy</td>
+                        <td>Design, editing, creativity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Key Tools</strong></td>
+                        <td>WordPress, Grammarly, Analytics</td>
+                        <td>Photoshop, Premiere, DaVinci</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deliverables</strong></td>
+                        <td>Articles, guides, copy, docs</td>
+                        <td>Posters, videos, images, designs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Works With</strong></td>
+                        <td>Designers, developers, marketers</td>
+                        <td>Photographers, directors, brands</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Career Roles</strong></td>
+                        <td>Content Manager, UX Writer, SEO</td>
+                        <td>Designer, Editor, Producer, Director</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Daily Tasks -->
+        <div class="tasks-grid">
+            <div class="tasks-box">
+                <h3>📝 Web Content Creator - Daily Tasks</h3>
+                <ul>
+                    <li>Write and optimize website copy</li>
+                    <li>Research keywords for SEO</li>
+                    <li>Plan content calendar</li>
+                    <li>Write for user experience (buttons, alerts)</li>
+                    <li>Analyze content performance</li>
+                    <li>Collaborate with designers & developers</li>
+                </ul>
+            </div>
+
+            <div class="tasks-box media">
+                <h3>🎨 Digital Media Creator - Daily Tasks</h3>
+                <ul>
+                    <li>Design posters & promotional materials</li>
+                    <li>Edit and enhance photos</li>
+                    <li>Edit videos (cut, trim, effects)</li>
+                    <li>Color correction & grading</li>
+                    <li>Create social media graphics</li>
+                    <li>Add animations & visual effects</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Progression Timeline -->
+        <div class="progression-section">
+            <h2>🚀 Career Progression Path</h2>
+            <div class="timeline-grid">
+                <div class="timeline-column">
+                    <h3>Web Content Creator Timeline</h3>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-content">
+                            <p>Months 1-6</p>
+                            <p>Junior Writer - Learn basics</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-content">
+                            <p>Months 7-12</p>
+                            <p>Content Strategist - Advanced skills</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-content">
+                            <p>Year 2+</p>
+                            <p>Senior Manager - Leadership role</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-column media">
+                    <h3>Digital Media Creator Timeline</h3>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-content">
+                            <p>Months 1-6</p>
+                            <p>Graphic Designer - Design basics</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-content">
+                            <p>Months 7-12</p>
+                            <p>Video Editor - Advanced editing</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-content">
+                            <p>Year 2+</p>
+                            <p>Multimedia Producer - Full creative control</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with ❤️ for aspiring content creators | Last Updated: 2024</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePath(button, pathId) {
+            const content = document.getElementById(pathId);
+            const isActive = content.classList.contains('active');
+
+            // Close all other paths
+            document.querySelectorAll('.path-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.path-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Toggle current path
+            if (!isActive) {
+                content.classList.add('active');
+                button.classList.add('active');
+            }
+        }
+
+        // Auto-open first path on load
+        window.addEventListener('load', function() {
+            const firstBtn = document.querySelector('.path-btn');
+            firstBtn.click();
+        });
+    </script>
+</body>
+</html>
